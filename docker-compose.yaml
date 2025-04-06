@@ -51,6 +51,9 @@ services:
         - path: dagster_pipelines
           target: /opt/dagster/app/dagster_pipelines
           action: sync
+        - path: dagster_pipelines_tests
+          target: /opt/dagster/app/dagster_pipelines_tests
+          action: sync
         - path: dagster.yaml
           action: rebuild
         - path: workspace.yaml
@@ -60,6 +63,7 @@ services:
     volumes:
       - ./dagster_pipelines:/opt/dagster/app/dagster_pipelines
       - ./dagster_pipelines/db/:/opt/dagster/app/dagster_pipelines/db/
+      - ./dagster_pipelines_tests:/opt/dagster/app/dagster_pipelines_tests 
   
   db:
     container_name: dagster_db
