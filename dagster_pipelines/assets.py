@@ -5,11 +5,11 @@ from dagster_pipelines.etl.load import load_to_duckdb
 import pandas as pd
 from datetime import datetime, timedelta
 
-@dg.asset(group_name="plan")
+@dg.asset(compute_kind="duckdb", group_name="plan")
 def kpi_fy_raw(context: dg.AssetExecutionContext):
     # Extract (KPI_FY.xlsm)
     df = read_excel()
-
+    load_to_duckdb(df, "KPI_Raw")
     return df
 
 # 2.3.1.1 Load pivoted KPI_FY.xlsm into KPI_FY

@@ -1,6 +1,7 @@
 from dagster import get_dagster_logger
 import duckdb
 import pandas as pd
+import os
 
 logger = get_dagster_logger()
 
@@ -16,6 +17,9 @@ def load_to_duckdb(df: pd.DataFrame, table_name: str) -> None:
             result = con.sql(f"SELECT * FROM plan.plan.{table_name} LIMIT 1").fetchone()
             logger.info(f"Sample record from {table_name}: {result}")
             logger.info(f"Data successfully inserted into table '{table_name}'.")
+            logger.info(f"File exists: {os.path.exists('/opt/dagster/app/dagster_pipelines/db/plan.db')}")
+            logger.info(f"File size: {os.path.getsize('/opt/dagster/app/dagster_pipelines/db/plan.db')}")
+
     except Exception as e:
         logger.error(f"Error loading data into DuckDB: {e}")
         raise
